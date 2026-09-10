@@ -15,9 +15,8 @@ namespace Autotracker.Domain.Entities
 
         public Location() { }
 
-        public Location(int id, double latitude, double longitude, DateTime timestamp)
+        public Location(double latitude, double longitude, DateTime timestamp)
         {
-            Id = id;
             Latitude = latitude;
             Longitude = longitude;
             Timestamp = timestamp;

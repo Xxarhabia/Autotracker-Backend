@@ -4,6 +4,6 @@
         string Plate,
         string Brand,
         string Model,
-        int Year
+        string Year
     );
 }

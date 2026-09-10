@@ -1,4 +1,5 @@
 ﻿using Autotracker.Api.Dtos.Vehicle;
+using Autotracker.Api.Dtos.Vehicle.Request;
 using Autotracker.Api.Mappers;
 using Autotracker.Application.Common;
 using Autotracker.Application.Services;
@@ -16,6 +17,32 @@ namespace Autotracker.Api.Controllers
         public VehiclesController(IVehicleService vehicleService)
         {
             _vehicleService = vehicleService;
+        }
+
+        [HttpPost]
+        public IActionResult Register([FromBody] CreateVehicleDto dto)
+        {
+            var initialLocation = new Location(8.2376, -73.3560, DateTime.Now);
+
+            var vehicle = new Vehicle(
+                dto.Plate,
+                dto.Brand,
+                dto.Model,
+                dto.Year,
+                engineOn: false,
+                locked: false,
+                inmovilized: false,
+                initialLocation
+            );
+
+            var result = _vehicleService.RegisterVehicle(vehicle);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var vehicleDto = VehicleMapper.ToDto((Vehicle)result.Data!);
+
+            return CreatedAtAction(nameof(GetByPlate), new { plate = dto.Plate }, vehicleDto);
         }
 
         [HttpGet("{plate}")]

@@ -1,5 +1,4 @@
-﻿using Autotracker.Api.Dtos;
-using Autotracker.Application.Common;
+﻿using Autotracker.Application.Common;
 using Autotracker.Domain.Entities;
 
 namespace Autotracker.Application.Services
