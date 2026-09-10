@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Autotracker.Api/Autotracker.Api.csproj" />
+  <Project Path="Autotracker.Application/Autotracker.Application.csproj" />
+  <Project Path="Autotracker.Domain/Autotracker.Domain.csproj" />
+  <Project Path="Autotracker.Infrastructure/Autotracker.Infrastructure.csproj" />
+</Solution>

@@ -1,0 +1,19 @@
+###@Autotracker.Api_HostAddress = http://localhost:5165
+@Autotracker.Api_HostAddress = http://localhost:5099
+
+GET {{Autotracker.Api_HostAddress}}/api/vehicles
+Accept: application/json
+
+###
+
+POST {{Autotracker.Api_HostAddress}}/api/vehicles
+Content-Type: application/json
+
+{
+  "plate": "AUX95C",
+  "brand": "Honda",
+  "model": "Splendor",
+  "year": 2010
+}
+
+###
