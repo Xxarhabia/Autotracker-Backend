@@ -13,21 +13,21 @@ namespace Autotracker.Application.Services.Impl
             _respository = respository;
         }
 
-        public ServiceResult RegisterVehicle(Vehicle vehicle)
+        public async Task<ServiceResult> RegisterVehicleAsync(Vehicle vehicle)
         {
             if (vehicle == null)
                 return new ServiceResult(false, "Error al registrar el vehiculo");
 
-            if (_respository.ExistsByPlate(vehicle.Plate))
+            if (await _respository.ExistsByPlateAsync(vehicle.Plate))
                 return new ServiceResult(false, "Ya existe un vehiculo con esta placa");
 
-            _respository.Add(vehicle);
+            await _respository.AddAsync(vehicle);
             return new ServiceResult(true, "Vehiculo registrado con exito", vehicle);
         }
 
-        public ServiceResult ListVehicles()
+        public async Task<ServiceResult> ListVehiclesAsync()
         {
-            List<Vehicle> vehicles = _respository.GetAll();
+            List<Vehicle> vehicles = await _respository.GetAllAsync();
 
             if (vehicles.Count() == 0) 
                 return new ServiceResult(true, "No hay vehiculos registrados");
@@ -35,9 +35,9 @@ namespace Autotracker.Application.Services.Impl
             return new ServiceResult(true, "Listado de vehiculos", vehicles);
         }
 
-        public ServiceResult SerchVehicle(string plate)
+        public async Task<ServiceResult> SerchVehicleAsync(string plate)
         {
-            Vehicle? vehicle = _respository.GetByPlate(plate);
+            Vehicle? vehicle =await _respository.GetByPlateAsync(plate);
 
             if (vehicle == null)
                 return new ServiceResult(false, "El vehiculo no existe");

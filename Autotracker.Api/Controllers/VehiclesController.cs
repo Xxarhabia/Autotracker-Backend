@@ -20,7 +20,7 @@ namespace Autotracker.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register([FromBody] CreateVehicleDto dto)
+        public async Task<ActionResult<VehicleDto>> Register([FromBody] CreateVehicleDto dto)
         {
             var initialLocation = new Location(8.2376, -73.3560, DateTime.Now);
 
@@ -35,7 +35,7 @@ namespace Autotracker.Api.Controllers
                 initialLocation
             );
 
-            var result = _vehicleService.RegisterVehicle(vehicle);
+            var result = await _vehicleService.RegisterVehicleAsync(vehicle);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -46,9 +46,9 @@ namespace Autotracker.Api.Controllers
         }
 
         [HttpGet("{plate}")]
-        public IActionResult GetByPlate(string plate)
+        public async Task<ActionResult<VehicleDto>> GetByPlate(string plate)
         {
-            ServiceResult result = _vehicleService.SerchVehicle(plate);
+            ServiceResult result = await _vehicleService.SerchVehicleAsync(plate);
 
             if (!result.Success)
                 return NotFound(result.Message);
@@ -61,9 +61,9 @@ namespace Autotracker.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult<List<VehicleDto>>> GetAll()
         {
-            ServiceResult result = _vehicleService.ListVehicles();
+            ServiceResult result = await _vehicleService.ListVehiclesAsync();
 
             if (!result.Success)
                 return NotFound(result.Message);

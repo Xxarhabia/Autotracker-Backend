@@ -5,8 +5,8 @@ namespace Autotracker.Application.Services
 {
     public interface IVehicleService
     {
-        public ServiceResult RegisterVehicle(Vehicle vehicle);
-        public ServiceResult ListVehicles();
-        public ServiceResult SerchVehicle(string plate);
+        public Task<ServiceResult> RegisterVehicleAsync(Vehicle vehicle);
+        public Task<ServiceResult> ListVehiclesAsync();
+        public Task<ServiceResult> SerchVehicleAsync(string plate);
     }
 }

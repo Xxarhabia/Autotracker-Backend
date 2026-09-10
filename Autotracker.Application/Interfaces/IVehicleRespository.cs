@@ -4,10 +4,10 @@ namespace Autotracker.Application.Interfaces
 {
     public interface IVehicleRespository
     {
-        Vehicle? GetByPlate(string plate);
-        List<Vehicle> GetAll();
-        void Add(Vehicle vehicle);
-        void Update(Vehicle vehicle);
-        bool ExistsByPlate(string plate);
+        Task<Vehicle?> GetByPlateAsync(string plate);
+        Task<List<Vehicle>> GetAllAsync();
+        Task AddAsync(Vehicle vehicle);
+        Task UpdateAsync(Vehicle vehicle);
+        Task<bool> ExistsByPlateAsync(string plate);
     }
 }

@@ -15,35 +15,34 @@ namespace Autotracker.Infrastructure.Repositories
             _context = context;
         }
 
-        public void Add(Vehicle vehicle)
+        public async Task AddAsync(Vehicle vehicle)
         {
-            _context.Vehicles.Add(vehicle);
-            _context.SaveChanges();
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
         }
 
-        public bool ExistsByPlate(string plate)
+        public async Task<bool> ExistsByPlateAsync(string plate)
         {
-            return _context.Vehicles.Any(v => v.Plate == plate);
+            return await _context.Vehicles.AnyAsync(v => v.Plate == plate);
         }
 
-        public List<Vehicle> GetAll()
+        public async Task<List<Vehicle>> GetAllAsync()
         {
-            return _context.Vehicles
+            return await _context.Vehicles
                 .Include(v => v.LocationHistory)
-                .ToList();
+                .ToListAsync();
         }
 
-        public Vehicle? GetByPlate(string plate)
+        public async Task<Vehicle?> GetByPlateAsync(string plate)
         {
-            return _context.Vehicles
+            return await _context.Vehicles
                 .Include(v => v.LocationHistory)
-                .FirstOrDefault(v => v.Plate == plate);
+                .FirstOrDefaultAsync(v => v.Plate == plate);
         }
 
-        public void Update(Vehicle vehicle)
+        public async Task UpdateAsync(Vehicle vehicle)
         {
-            _context.Update(vehicle);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
