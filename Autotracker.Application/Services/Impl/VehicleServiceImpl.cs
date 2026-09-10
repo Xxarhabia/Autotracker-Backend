@@ -44,5 +44,44 @@ namespace Autotracker.Application.Services.Impl
 
             return new ServiceResult(true, "Vehiculo encontrado", vehicle);
         }
+
+        public async Task<ServiceResult> LockVehicleAsync(string plate)
+        {
+            Vehicle? vehicle = await _respository.GetByPlateAsync(plate);
+
+            if (vehicle == null)
+                return new ServiceResult(false, "Vehiculo no encontrado");
+
+            string message = vehicle.Lock();
+
+            return new ServiceResult(true, message, vehicle);
+        }
+
+        public async Task<ServiceResult> UnlockVehicleAsync(string plate)
+        {
+            Vehicle? vehicle = await _respository.GetByPlateAsync(plate);
+
+            if (vehicle == null)
+                return new ServiceResult(false, "Vehiculo no encontrado");
+
+            string message = vehicle.Unlock();
+
+            return new ServiceResult(true, message, vehicle);
+        }
+
+        public Task<ServiceResult> StartVehicleAsync(string plate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResult> StopVehicleAsync(string plate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ServiceResult> UpdateVehicleLocationAsync(string plate, Location newLocation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
