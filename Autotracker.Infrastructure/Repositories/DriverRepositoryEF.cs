@@ -1,4 +1,4 @@
-﻿using Autotracker.Application.Dtos;
+﻿using Autotracker.Application.Dtos.Drivers;
 using Autotracker.Application.Interfaces;
 using Autotracker.Domain.Entities;
 using Autotracker.Infrastructure.Data;

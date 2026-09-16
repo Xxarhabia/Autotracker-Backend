@@ -1,8 +1,7 @@
-﻿using Autotracker.Api.Dtos.Driver;
-using Autotracker.Api.Dtos.Driver.Request;
-using Autotracker.Application.Common;
+﻿using Autotracker.Application.Common;
 using Autotracker.Application.Services;
 using Autotracker.Domain.Builders;
+using Autotracker.Application.Dtos.Drivers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autotracker.Api.Controllers
@@ -21,19 +20,12 @@ namespace Autotracker.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<DriverDto>> Register(CreateDriverRequestDto dto)
         {
-
-            var driver = new DriverBuilder()
-                .WithName(dto.Name)
-                .WithDocument(dto.Document)
-                .WithPhone(dto.Phone)
-                .build();
-
-            var response = await _driverService.CreateDriverAsync(driver);
+            var response = await _driverService.CreateDriverAsync(dto);
 
             if (!response.Success)
                 return BadRequest(response.Message);
 
-            return CreatedAtAction(nameof(GetByDocument), new { document = dto.Document }, driver);
+            return CreatedAtAction(nameof(GetByDocument), new { document = dto.Document }, response.Data);
         }
 
         [HttpGet("{document}")]

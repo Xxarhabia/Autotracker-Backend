@@ -1,6 +1,8 @@
 ﻿using Autotracker.Application.Common;
 using Autotracker.Application.Dtos;
+using Autotracker.Application.Dtos.Drivers;
 using Autotracker.Application.Interfaces;
+using Autotracker.Domain.Builders;
 using Autotracker.Domain.Entities;
 using System.Reflection.Metadata;
 
@@ -16,13 +18,19 @@ namespace Autotracker.Application.Services.Impl
             _repository = driverRepository;
         }
 
-        public async Task<ServiceResult> CreateDriverAsync(Driver driver)
+        public async Task<ServiceResult> CreateDriverAsync(CreateDriverRequestDto dto)
         {
-            if (driver == null)
+            if (dto == null)
                 return new ServiceResult(false, "Error al crear el conductor");
 
-            if (await _repository.ExistByDocumentAsync(driver.Document))
+            if (await _repository.ExistByDocumentAsync(dto.Document))
                 return new ServiceResult(false, "El conductor ingresado ya existe");
+
+            var driver = new DriverBuilder()
+                .WithName(dto.Name)
+                .WithDocument(dto.Document)
+                .WithPhone(dto.Phone)
+                .build();
 
             await _repository.AddAsync(driver);
 

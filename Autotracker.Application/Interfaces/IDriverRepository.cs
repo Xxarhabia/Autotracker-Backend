@@ -1,4 +1,4 @@
-﻿using Autotracker.Application.Dtos;
+﻿using Autotracker.Application.Dtos.Drivers;
 using Autotracker.Domain.Entities;
 
 namespace Autotracker.Application.Interfaces

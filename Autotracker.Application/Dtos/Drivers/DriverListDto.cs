@@ -1,4 +1,4 @@
-﻿namespace Autotracker.Application.Dtos
+﻿namespace Autotracker.Application.Dtos.Drivers
 {
     public class DriverListDto
     {
