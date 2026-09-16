@@ -1,6 +1,8 @@
 ﻿using Autotracker.Application.Common;
+using Autotracker.Application.Dtos;
 using Autotracker.Application.Interfaces;
 using Autotracker.Domain.Entities;
+using System.Reflection.Metadata;
 
 namespace Autotracker.Application.Services.Impl
 {
@@ -23,12 +25,21 @@ namespace Autotracker.Application.Services.Impl
                 return new ServiceResult(false, "El conductor ingresado ya existe");
 
             await _repository.AddAsync(driver);
-            return new ServiceResult(true, "Conductor creado con exito", driver);
+
+            var responseData = new DriverResponse
+            {
+                Id = driver.Id,
+                Name = driver.Name,
+                Document = driver.Document,
+                Phone = driver.Phone
+            };
+
+            return new ServiceResult(true, "Conductor creado con exito", responseData);
         }
 
         public async Task<ServiceResult> ListDriversAsync()
         {
-            List<Driver> drivers = await _repository.GetAllAsync();
+            List<DriverListDto> drivers = await _repository.GetAllAsync();
 
             if (drivers.Count() == 0)
                 return new ServiceResult(false, "No hay conductores registrados");
@@ -38,7 +49,7 @@ namespace Autotracker.Application.Services.Impl
 
         public async Task<ServiceResult> SearchDriverAsync(string document)
         {
-            Driver? driver = await _repository.GetByDocumentAsync(document);
+            DriverListDto? driver = await _repository.GetByDocumentAsync(document);
 
             if (driver == null)
                 return new ServiceResult(false, "El conductor no existe");

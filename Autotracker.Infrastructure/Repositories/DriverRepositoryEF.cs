@@ -1,4 +1,5 @@
-﻿using Autotracker.Application.Interfaces;
+﻿using Autotracker.Application.Dtos;
+using Autotracker.Application.Interfaces;
 using Autotracker.Domain.Entities;
 using Autotracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -25,18 +26,31 @@ namespace Autotracker.Infrastructure.Repositories
             return await _context.Drivers.AnyAsync(d => d.Document == document);
         }
 
-        public async Task<List<Driver>> GetAllAsync()
+        public async Task<List<DriverListDto>> GetAllAsync()
         {
             return await _context.Drivers
-                .Include(d => d.VehicleId)
+                .Select(d => new DriverListDto 
+                {
+                    Id = d.Id,
+                    Document = d.Document,
+                    FullName = d.Name,
+                    VehiclePlate = d.Vehicle != null ? d.Vehicle.Plate : null,
+                })
                 .ToListAsync();
         }
 
-        public async Task<Driver?> GetByDocumentAsync(string document)
+        public async Task<DriverListDto?> GetByDocumentAsync(string document)
         {
             return await _context.Drivers
-                .Include(d => d.VehicleId)
-                .FirstOrDefaultAsync(d => d.Document == document);
+                .Where(d => d.Document == document)
+                .Select(d => new DriverListDto
+                {
+                    Id = d.Id,
+                    Document = d.Document,
+                    FullName = d.Name,
+                    VehiclePlate = d.Vehicle != null ? d.Vehicle.Plate : null
+                })
+                .FirstOrDefaultAsync();
         }
     }
 }

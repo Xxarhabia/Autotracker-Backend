@@ -6,6 +6,6 @@ namespace Autotracker.Api.Dtos.Driver
         string name,
         string document,
         string phone,
-        int vehicleId
+        int? vehicleId
     );
 }

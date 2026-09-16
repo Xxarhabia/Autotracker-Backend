@@ -3,7 +3,6 @@ using Autotracker.Api.Dtos.Driver.Request;
 using Autotracker.Application.Common;
 using Autotracker.Application.Services;
 using Autotracker.Domain.Builders;
-using Autotracker.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Autotracker.Api.Controllers
@@ -19,7 +18,6 @@ namespace Autotracker.Api.Controllers
             _driverService = driverService;
         }
 
-        //TODO crear mappers de toDto para la respuesta en cada endpoint
         [HttpPost]
         public async Task<ActionResult<DriverDto>> Register(CreateDriverRequestDto dto)
         {
@@ -45,9 +43,18 @@ namespace Autotracker.Api.Controllers
 
             if (!result.Success) return BadRequest(result.Message);
 
-            Driver driver = (Driver)result.Data!;
+            return Ok(result.Data);
+        }
 
-            return Ok(driver);
+        [HttpGet]
+        public async Task<ActionResult<List<DriverDto>>> GetAll()
+        {
+            ServiceResult result = await _driverService.ListDriversAsync();
+
+            if (!result.Success)
+                return NotFound(result.Message);
+
+            return Ok(result.Data);
         }
         
     }
