@@ -20,6 +20,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IVehicleRespository, VehicleRepositoryEf>();
 builder.Services.AddScoped<IVehicleService, VehicleServiceImpl>();
 
+builder.Services.AddTransient<IDriverRepository, DriverRepositoryEF>();
+builder.Services.AddScoped<IDriverService, DriverServiceImpl>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

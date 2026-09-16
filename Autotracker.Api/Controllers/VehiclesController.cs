@@ -3,6 +3,7 @@ using Autotracker.Api.Dtos.Vehicle.Request;
 using Autotracker.Api.Mappers;
 using Autotracker.Application.Common;
 using Autotracker.Application.Services;
+using Autotracker.Domain.Builders;
 using Autotracker.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,16 +25,16 @@ namespace Autotracker.Api.Controllers
         {
             var initialLocation = new Location(8.2376, -73.3560, DateTime.Now);
 
-            var vehicle = new Vehicle(
-                dto.Plate,
-                dto.Brand,
-                dto.Model,
-                dto.Year,
-                engineOn: false,
-                locked: false,
-                inmovilized: false,
-                initialLocation
-            );
+            var vehicle = new VehicleBuilder()
+                .WithPlate(dto.Plate)
+                .WithBrand(dto.Brand)
+                .WithModel(dto.Model)
+                .WithYear(dto.Year)
+                .WithEngineOn(false)
+                .WithLocked(false)
+                .WithInmovilized(false)
+                .WithInitialLocation(initialLocation)
+                .build();
 
             var result = await _vehicleService.RegisterVehicleAsync(vehicle);
 
