@@ -39,9 +39,9 @@ namespace Autotracker.Domain.Builders
             return this;
         }
 
-        public VehicleBuilder WithInitialLocation(Location location)
+        public VehicleBuilder WithInitialLocation(double latitude, double Longitude, DateTime timestamp)
         {
-            _initialLocation = location;
+            _initialLocation = new Location(latitude, Longitude, timestamp);
             return this;
         }
 

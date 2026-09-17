@@ -1,5 +1,4 @@
-﻿using Autotracker.Api.Dtos.Vehicle;
-using Autotracker.Api.Dtos.Vehicle.Request;
+﻿using Autotracker.Application.Dtos.Vehicles;
 using Autotracker.Api.Mappers;
 using Autotracker.Application.Common;
 using Autotracker.Application.Services;
@@ -23,20 +22,7 @@ namespace Autotracker.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleDto>> Register([FromBody] CreateVehicleDto dto)
         {
-            var initialLocation = new Location(8.2376, -73.3560, DateTime.Now);
-
-            var vehicle = new VehicleBuilder()
-                .WithPlate(dto.Plate)
-                .WithBrand(dto.Brand)
-                .WithModel(dto.Model)
-                .WithYear(dto.Year)
-                .WithEngineOn(false)
-                .WithLocked(false)
-                .WithInmovilized(false)
-                .WithInitialLocation(initialLocation)
-                .build();
-
-            var result = await _vehicleService.RegisterVehicleAsync(vehicle);
+            var result = await _vehicleService.RegisterVehicleAsync(dto);
 
             if (!result.Success)
                 return BadRequest(result.Message);

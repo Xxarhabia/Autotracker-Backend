@@ -3,8 +3,6 @@ using Autotracker.Application.Dtos;
 using Autotracker.Application.Dtos.Drivers;
 using Autotracker.Application.Interfaces;
 using Autotracker.Domain.Builders;
-using Autotracker.Domain.Entities;
-using System.Reflection.Metadata;
 
 namespace Autotracker.Application.Services.Impl
 {

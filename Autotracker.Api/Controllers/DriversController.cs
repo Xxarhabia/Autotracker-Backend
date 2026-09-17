@@ -1,6 +1,5 @@
 ﻿using Autotracker.Application.Common;
 using Autotracker.Application.Services;
-using Autotracker.Domain.Builders;
 using Autotracker.Application.Dtos.Drivers;
 using Microsoft.AspNetCore.Mvc;
 
