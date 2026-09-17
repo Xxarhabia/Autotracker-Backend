@@ -2,7 +2,6 @@
 using Autotracker.Api.Mappers;
 using Autotracker.Application.Common;
 using Autotracker.Application.Services;
-using Autotracker.Domain.Builders;
 using Autotracker.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,5 +60,35 @@ namespace Autotracker.Api.Controllers
 
             return Ok(dtos);
         }
+
+        [HttpPatch("start/{plate}")]
+        public async Task<ActionResult> Start(string plate)
+        {
+            ServiceResult result = await _vehicleService.StartVehicleAsync(plate);
+            return Ok(result.Message);
+        }
+
+        [HttpPatch("stop/{plate}")]
+        public async Task<ActionResult> Stop(string plate)
+        {
+            ServiceResult result = await _vehicleService.StopVehicleAsync(plate);
+            return Ok(result.Message);
+        }
+
+        [HttpPatch("lock/{plate}")]
+        public async Task<ActionResult> Lock(string plate)
+        {
+            ServiceResult result = await _vehicleService.LockVehicleAsync(plate);
+            return Ok(result.Message);
+        }
+
+        [HttpPatch("unlock/{plate}")]
+        public async Task<ActionResult> Unlock(string plate)
+        {
+            ServiceResult result = await _vehicleService.UnlockVehicleAsync(plate);
+            return Ok(result.Message);
+        }
+
+
     }
 }
