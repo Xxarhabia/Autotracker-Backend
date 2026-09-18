@@ -111,9 +111,22 @@ namespace Autotracker.Application.Services.Impl
             return new ServiceResult(true, message, vehicle);
         }
 
-        public Task<ServiceResult> UpdateVehicleLocationAsync(string plate, LocationDto newLocationDto)
+        public async Task<ServiceResult> UpdateVehicleLocationAsync(string plate, LocationDto newLocationDto)
         {
-            throw new NotImplementedException();
+            Vehicle? vehicle = await _respository.GetByPlateAsync(plate);
+
+            if (vehicle == null)
+                return new ServiceResult(false, "Vehiculo no encontrado");
+
+            if (!vehicle.EngineOn)
+                return new ServiceResult(false, "El vehiculo debe estar encendido para actualizar su ubicacion");
+
+            var location = new Location(newLocationDto.Latitude, newLocationDto.Longitude, newLocationDto.Timestamp);
+            vehicle.UpdateLocation(location);
+
+            await _respository.UpdateAsync(vehicle);
+
+            return new ServiceResult(true, "Ubicacion actualizada", vehicle);
         }
     }
 }

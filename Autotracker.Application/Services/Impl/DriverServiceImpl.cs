@@ -75,7 +75,7 @@ namespace Autotracker.Application.Services.Impl
 
             Vehicle? vehicle = await _vehicleRepository.GetByPlateAsync(plate);
             if (vehicle == null)
-                return new ServiceResult(false, $"no se encontro el vehiculo: {vehicle}");
+                return new ServiceResult(false, $"no se encontro el vehiculo: {plate}");
 
             bool isAssigned = await _driverRepository.IsVehicleAssignedToAnotherDriverAsync(vehicle.Id, driver.Id);
             if (isAssigned)
@@ -85,7 +85,15 @@ namespace Autotracker.Application.Services.Impl
 
             await _driverRepository.UpdateAsync(driver);
 
-            return new ServiceResult(true, "Vehiculo asignado al conductor", driver);
+            DriverDto driverDto = new DriverDto
+            {
+                Name = driver.Name,
+                Document = driver.Document,
+                Phone = driver.Phone,
+                VehicleId = driver.VehicleId
+            };
+
+            return new ServiceResult(true, "Vehiculo asignado al conductor", driverDto);
         }
 
         public async Task<ServiceResult> UnassignVehicleAsync(string document)
@@ -97,7 +105,15 @@ namespace Autotracker.Application.Services.Impl
             driver.UnassignVehicle();
             await _driverRepository.UpdateAsync(driver);
 
-            return new ServiceResult(true, "Vehiculo retirado del conductor", driver);
+            DriverDto driverDto = new DriverDto
+            {
+                Name = driver.Name,
+                Document = driver.Document,
+                Phone = driver.Phone,
+                VehicleId = driver.VehicleId
+            };
+
+            return new ServiceResult(true, "Vehiculo retirado del conductor", driverDto);
 
         }
     }

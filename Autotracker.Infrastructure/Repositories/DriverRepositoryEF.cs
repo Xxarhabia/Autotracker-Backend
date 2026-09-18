@@ -56,8 +56,8 @@ namespace Autotracker.Infrastructure.Repositories
         public async Task<Driver?> GetDriverByDocumentAsync(string document)
         {
             return await _context.Drivers
-                .Include(d => d.VehicleId)
-                .FirstOrDefaultAsync();
+                .Include(d => d.Vehicle)
+                .FirstOrDefaultAsync(d => d.Document == document);
         }
 
         public async Task<bool> IsVehicleAssignedToAnotherDriverAsync(int vehicleId, int currentDriverId)

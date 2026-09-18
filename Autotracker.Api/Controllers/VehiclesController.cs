@@ -4,6 +4,7 @@ using Autotracker.Application.Common;
 using Autotracker.Application.Services;
 using Autotracker.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Autotracker.Application.Dtos.Locations;
 
 namespace Autotracker.Api.Controllers
 {
@@ -89,6 +90,15 @@ namespace Autotracker.Api.Controllers
             return Ok(result.Message);
         }
 
+        [HttpPatch("location/{plate}")]
+        public async Task<ActionResult> UpdateLocation(string plate, [FromBody] LocationDto dto)
+        {
+            ServiceResult result = await _vehicleService.UpdateVehicleLocationAsync(plate, dto);
 
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(result.Message);
+        }
     }
 }

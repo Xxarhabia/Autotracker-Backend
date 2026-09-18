@@ -49,7 +49,7 @@ namespace Autotracker.Api.Controllers
             return Ok(result.Data);
         }
 
-        [HttpPatch("{document}/assign/{palte}")]
+        [HttpPatch("{document}/assign/{plate}")]
         public async Task<ActionResult<DriverDto>> AssignVehicle(string document, string plate)
         {
             var result = await _driverService.AssignVehicleAsync(document, plate);
