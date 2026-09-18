@@ -9,5 +9,8 @@ namespace Autotracker.Application.Services
         public Task<ServiceResult> CreateDriverAsync(CreateDriverRequestDto dto);
         public Task<ServiceResult> ListDriversAsync();
         public Task<ServiceResult> SearchDriverAsync(string document);
+        public Task<ServiceResult> AssignVehicleAsync(string document, string plate);
+        public Task<ServiceResult> UnassignVehicleAsync(string document);
+
     }
 }

@@ -2,6 +2,7 @@
 using Autotracker.Application.Services;
 using Autotracker.Application.Dtos.Drivers;
 using Microsoft.AspNetCore.Mvc;
+using Autotracker.Api.Mappers;
 
 namespace Autotracker.Api.Controllers
 {
@@ -44,6 +45,28 @@ namespace Autotracker.Api.Controllers
 
             if (!result.Success)
                 return NotFound(result.Message);
+
+            return Ok(result.Data);
+        }
+
+        [HttpPatch("{document}/assign/{palte}")]
+        public async Task<ActionResult<DriverDto>> AssignVehicle(string document, string plate)
+        {
+            var result = await _driverService.AssignVehicleAsync(document, plate);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            return Ok(result.Data);
+        }
+
+        [HttpPatch("{document}/unassign")]
+        public async Task<ActionResult<DriverDto>> UnassgnVehicle(string document)
+        {
+            var result = await _driverService.UnassignVehicleAsync(document);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
 
             return Ok(result.Data);
         }

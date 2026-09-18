@@ -52,5 +52,23 @@ namespace Autotracker.Infrastructure.Repositories
                 })
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<Driver?> GetDriverByDocumentAsync(string document)
+        {
+            return await _context.Drivers
+                .Include(d => d.VehicleId)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> IsVehicleAssignedToAnotherDriverAsync(int vehicleId, int currentDriverId)
+        {
+            return await _context.Drivers
+                .AnyAsync(d => d.VehicleId == vehicleId && d.Id != currentDriverId);
+        }
+
+        public async Task UpdateAsync(Driver driver)
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
